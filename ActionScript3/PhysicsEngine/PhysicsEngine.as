@@ -25,10 +25,21 @@ package PhysicsEngine {
 		/* Algorithm Data */
 		private var SAT:SeparatingAxisTheorem;
 
+		// temp data
+		private var collisionReaction:String;
+
 		/* * * * * * * *
 		 * Constructor *
 		 * * * * * * * */
-		function PhysicsEngine() {
+		function PhysicsEngine(collisionReaction:String) {
+			/* Events */
+			addEventListener(Event.ADDED_TO_STAGE, function():void {
+				parent.stage.addEventListener(MouseEvent.MOUSE_UP, stageMouseUp);
+				parent.stage.addEventListener(MouseEvent.MOUSE_MOVE, stageMouseMove);
+				parent.stage.addEventListener(Event.ENTER_FRAME, stageEnterFrame);
+			});
+
+			/* UI */
 			setupUI();
 
 			/* Object Data */
@@ -38,12 +49,16 @@ package PhysicsEngine {
 			SAT = new SeparatingAxisTheorem();
 			addChild(SAT);
 
+			// temp data
+			this.collisionReaction = collisionReaction;
+
 		}
 
 		public function stageMouseUp(e:MouseEvent):void { 
 				var i:int;
 				for( i = 0; i < polygons.length; i++ ) {
-					polygons[i].dragging = false;				
+					polygons[i].dragging = false;	
+					polygons[i].setMass(0);	
 				}
 		}
 		public function stageMouseMove(e:MouseEvent):void {
@@ -56,8 +71,13 @@ package PhysicsEngine {
 			}
 		}
 		public function stageEnterFrame(e:Event):void {
+			if(collisionReaction == 'boolean')
+				label.text = "Collision? " + SAT.isCollisionRegularConvexPolygons(polygons);
+			if(collisionReaction == 'resolve') {
+				var vec:Vector2 = SAT.resolveCollisionOfRegularConvexPolygonsByProjection(polygons);
+				label.text = "DisplacementVec: (" + vec.x + ", " + vec.y + ")";
+			}
 			draw();
-			label.text = "Collision? " + SAT.isCollisionRegularConvexPolygons(polygons);
 		}
 
 
@@ -82,7 +102,7 @@ package PhysicsEngine {
 			addChild(polygon);
 			polygon.addEventListener(MouseEvent.MOUSE_OVER, function(e:MouseEvent):void { Mouse.cursor = MouseCursor.HAND });
 			polygon.addEventListener(MouseEvent.MOUSE_OUT, function(e:MouseEvent):void { Mouse.cursor = MouseCursor.AUTO });
-			polygon.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent):void { polygon.dragging = true; });
+			polygon.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent):void { polygon.dragging = true; polygon.setMass(1);});
 		}
 
 		/* * * * * * * * * * * * * *
@@ -91,7 +111,8 @@ package PhysicsEngine {
 
 		private function draw():void {
 			drawPolygons();
-			//SAT.drawProjectionAxesOfRegularConvexPolygons(polygons);				
+			if (collisionReaction == 'draw')
+				SAT.drawProjectionAxesOfRegularConvexPolygons(polygons);				
 		}
 
 		private function drawPolygons():void {

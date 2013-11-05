@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- build.xml -->
-<project name="My App Builder" basedir=".">
+<project name="Physical" basedir=".">
     <property name="FLEX_HOME" value="/usr/local/flex"/>
     <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
     <property name="APP_ROOT" value="."/>
 
     <target name="Tests">
-        <mxmlc file="${APP_ROOT}/Tests/ProjectionAxisDisplayTest.as">
+        <mxmlc file="${APP_ROOT}/Tests/ProjectionAxisDrawTest.as">
+            <load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+            <!-- Doesn't work yet <load-config filename="${APP_ROOT}/my-flex-config.xml"/>-->
+            <source-path path-element="${FLEX_HOME}/frameworks"/>
+            <source-path path-element="${APP_ROOT}"/>
+        </mxmlc>
+        <mxmlc file="${APP_ROOT}/Tests/ProjectionAxisBooleanTest.as">
+            <load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+            <!-- Doesn't work yet <load-config filename="${APP_ROOT}/my-flex-config.xml"/>-->
+            <source-path path-element="${FLEX_HOME}/frameworks"/>
+            <source-path path-element="${APP_ROOT}"/>
+        </mxmlc>
+        <mxmlc file="${APP_ROOT}/Tests/ProjectionAxisResolveTest.as">
             <load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
             <!-- Doesn't work yet <load-config filename="${APP_ROOT}/my-flex-config.xml"/>-->
             <source-path path-element="${FLEX_HOME}/frameworks"/>

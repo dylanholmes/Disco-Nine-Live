@@ -10,12 +10,15 @@ package PhysicsEngine.Objects {
 		private var vertices:Vector.<Vector2>;
 		private var normals:Vector.<Vector2>;
 
+		/* Physical Data */
+		private var mass:Number;
+
 		/* Asthetic Data */
 		private var color:Number;
 
 		/* Constraint Data */
 			// Draggable Constraint
-			public var dragging:Boolean;		
+			public var dragging:Boolean;
 
 		/* * * * * * * *
 		 * Constructor *
@@ -43,6 +46,10 @@ package PhysicsEngine.Objects {
 			for(i=1; i<numberOfVertices; i++)
 				normals.push( (new Vector2(normals[i-1].x, normals[i-1].y)).rotate(2 * Math.PI / numberOfVertices) );
 
+			/* Physical Data */
+			/*   -> mass     */
+			this.mass = 0;
+
 			/*	Asthetic Data		*/
 			this.color = color;
 		}
@@ -59,6 +66,9 @@ package PhysicsEngine.Objects {
 		public function getNormals():Vector.<Vector2> {
 			return normals;
 		}
+		/* Physical Methods */
+		public function setMass(mass:Number):void {this.mass = mass};
+		public function getMass():Number { return mass; }
 		/* Asthetic Methods */
 		public function getColor():Number {
 			return color;

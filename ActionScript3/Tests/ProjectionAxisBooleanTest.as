@@ -16,7 +16,7 @@ package Tests {
 	import Vendor.Stats;
 
 	[SWF(backgroundColor="0x000000")]
-	public class ProjectionAxisDisplayTest extends Sprite {
+	public class ProjectionAxisBooleanTest extends Sprite {
 		/* UI */
 		private var collisionLabel:TextField;
 		private var collisionLabelFormat:TextFormat;
@@ -26,34 +26,23 @@ package Tests {
 		private var physicsEngine:PhysicsEngine;
 		
 
-		function ProjectionAxisDisplayTest() {
+		function ProjectionAxisBooleanTest() {
 
 			/* Setup UI */
 			//setupUI();
 			addChild(new Stats());
 
-			physicsEngine = new PhysicsEngine();
+			physicsEngine = new PhysicsEngine('boolean');
 			// center the physics engine, centers physics engine's coordinate system too, which makes calculations easier
 			physicsEngine.x = stage.stageWidth/2;
 			physicsEngine.y = stage.stageHeight/2;
 			addChild(physicsEngine)
-
-			/*
-			var i:int;
-			for(i=0; i< 30; i++)
-				physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(i * 20 - 300, 50 * (i%3) - 50), 20, i%5 + 3,  (0xF0 << (i%16)) + 0x0F0F0F));
-			*/
 
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(-100, 50), 20, 3,  0xFF0000 ));
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(-50, 50), 20, 4, 0xFF8800 ));
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(0, 50), 20, 5, 0x00FF00 ));
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(50, 50), 20, 6, 0x00FFFF ));
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(100, 50), 20, 7, 0x0000FF ));
-			
-
-			stage.addEventListener(MouseEvent.MOUSE_UP, physicsEngine.stageMouseUp);
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, physicsEngine.stageMouseMove);
-			stage.addEventListener(Event.ENTER_FRAME, physicsEngine.stageEnterFrame);
 		}
 
 		private function setupUI():void {
