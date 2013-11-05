@@ -40,9 +40,9 @@ package Tests {
 
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(-100, 50), 20, 3,  0xFF0000 ));
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(-50, 50), 20, 4, 0xFF8800 ));
-			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(0, 50), 20, 5, 0x00FF00 ));
+			/*physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(0, 50), 20, 5, 0x00FF00 ));
 			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(50, 50), 20, 6, 0x00FFFF ));
-			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(100, 50), 20, 7, 0x0000FF ));
+			physicsEngine.addPolygon(new RegularConvexPolygon( new Vector2(100, 50), 20, 7, 0x0000FF ));*/
 			
 		}
 

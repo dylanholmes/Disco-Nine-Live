@@ -23,7 +23,7 @@ package PhysicsEngine.Algorithms.CollisionDetection.NarrowPhase {
 				normals 	= polygons[i].getNormals();
 				center 		= polygons[i].getCenter();
 				length		= 100 * polygons[i].getRadius();
-				distance	= 1 * polygons[i].getRadius();
+				distance	= 4 * polygons[i].getRadius();
 
 				//	for each normal:
 				for(j=0; j<normals.length; j++) {
@@ -128,7 +128,7 @@ package PhysicsEngine.Algorithms.CollisionDetection.NarrowPhase {
 						var displacement:Vector2 = new Vector2();
 						var temp_dis:Vector2 = new Vector2();
 						var collision:Boolean = true; // assume true, prove false
-						var movePolygonI:Boolean  = false; // assume were moving the second polygon, switch if other has shorter dis
+						var shortestIsI:Boolean = true;
 						// for each normal: Check polygons[i] on polygons[j]
 						for( k = 0; k < normalsI.length; k++ ) {
 							// calculate the projection axis
@@ -161,9 +161,10 @@ package PhysicsEngine.Algorithms.CollisionDetection.NarrowPhase {
 									break;
 								} else {
 									if(Vector2.dot(temp_dis,temp_dis) < Vector2.dot(displacement,displacement)) {
-										if (Vector2.dot(temp_dis,temp_dis))// !0
+										if (Vector2.dot(temp_dis,temp_dis)) {// !0
 											displacement = temp_dis;
-										  
+											shortestIsI = false;
+										}
 									}
 								}
 							}
@@ -171,10 +172,16 @@ package PhysicsEngine.Algorithms.CollisionDetection.NarrowPhase {
 							// if there is still a collision, resolve using displacemt
 							if (collision) {
 								debugVec = displacement;
-								if (polygons[i].getMass() > polygons[j].getMass()) {
-									polygons[i].setCenter(centerI.add(displacement));
+								if (polygons[i].getMass() < polygons[j].getMass()) {
+									if (!shortestIsI) 
+										polygons[i].setCenter(centerI.add(displacement));
+									else
+										polygons[i].setCenter(centerI.add(displacement.multiply(-1)));
 								} else {
-									polygons[j].setCenter(centerJ.add(displacement));
+									if (shortestIsI) 
+										polygons[j].setCenter(centerJ.add(displacement));
+									else
+										polygons[j].setCenter(centerJ.add(displacement.multiply(-1)));
 								}
 							}								
 						}
