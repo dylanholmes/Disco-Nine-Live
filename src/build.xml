@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- build.xml -->
-<project name="Physical" basedir=".">
+<project name="Disco-Nine-Live" basedir=".">
     <property name="FLEX_HOME" value="/usr/local/flex"/>
     <taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"/>
     <property name="APP_ROOT" value="."/>
